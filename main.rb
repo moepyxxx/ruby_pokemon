@@ -1,24 +1,24 @@
 #!/usr/bin/env ruby
 require 'bundler/setup'
 require_relative 'pokemon/water_pokemon'
+require_relative 'pokemon/player_pokemon'
 require_relative 'pokemon/grass_pokemon'
 require_relative 'pokemon/fire_pokemon'
 require_relative 'battle/battle'
 require_relative 'serif'
 
-# choice = prompt.select("何をしますか？", %w(起動 停止 再起動 終了))
-# puts "#{choice}を実行します"
+# waninoko = Pokemon.new("ワニノコ", :grass, ["たいあたり", "みずでっぽう"])
+hinoarashi = Pokemon.new("ヒノアラシ", :fire, ["たいあたり", "ひのこ"])
+chikorita = Pokemon.new("チコリータ", :grass, ["たいあたり", "はっぱカッター"])
 
-waninoko = WaterPokemon.new("ワニノコ", 100)
-hinoarashi = FirePokemon.new("ヒノアラシ", 100)
-chikorita = GrassPokemon.new("チコリータ", 100)
+# プレイヤーのポケモンをセット(ゲットしたイメージ)
+player_pokemon = PlayerPokemon.new(hinoarashi, 5, hinoarashi.moves, 100)
 
-Serif.say(waninoko.status)
-Serif.say(hinoarashi.status)
-Serif.say(chikorita.status)
-Serif.next("(続ける)")
+# バトル用にセット
+player_battle_pokemon = BattlePokemon.new(player_pokemon.pokemon.name, player_pokemon.pokemon.type, player_pokemon.moves, player_pokemon.level, player_pokemon.hp)
+enemy_battle_pokemon = BattlePokemon.new(chikorita.name, chikorita.type, chikorita.moves, 4, 50)
 
-battle = Battle.new(hinoarashi, waninoko)
+battle = Battle.new(player_battle_pokemon, enemy_battle_pokemon)
 introductions = battle.introduction
 introductions.each do |line|
   Serif.say(line)

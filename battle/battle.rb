@@ -1,4 +1,4 @@
-require_relative '../pokemon/pokemon'
+require_relative '../pokemon/battle_pokemon'
 require_relative 'battle_status'
 
 class Battle
@@ -12,7 +12,7 @@ class Battle
 
   def introduction
     go_to_next_status
-    return ["#{@enemy_pokemon.name}が現れた！", "いけ！ #{@player_pokemon.name}！"]
+    return [@player_pokemon.status, @enemy_pokemon.status, "#{@enemy_pokemon.name}が現れた！", "いけ！ #{@player_pokemon.name}！"]
   end
 
   def battle_in_progress?
