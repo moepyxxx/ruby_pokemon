@@ -16,4 +16,8 @@ class Pokemon
   def take_damage(damage)
     @hp -= damage
   end
+
+  def special_move
+    raise NotImplementedError, "サブクラスで実装してください"
+  end
 end
