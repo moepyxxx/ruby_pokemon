@@ -1,5 +1,6 @@
 require_relative '../pokemon/battle_pokemon'
 require_relative 'battle_status'
+require_relative 'battle_message_generator'
 
 class Battle
   @status = BattleStatus::START
@@ -8,11 +9,12 @@ class Battle
   def initialize(player_pokemon, enemy_pokemon)
     @player_pokemon = player_pokemon
     @enemy_pokemon = enemy_pokemon
+    @battle_message_generator = BattleMessageGenerator.new(@player_pokemon, @enemy_pokemon)
   end
 
   def introduction
     go_to_next_status
-    return [@player_pokemon.status, @enemy_pokemon.status, "#{@enemy_pokemon.name}が現れた！", "いけ！ #{@player_pokemon.name}！"]
+    return @battle_message_generator.introduction
   end
 
   def battle_in_progress?
@@ -67,10 +69,10 @@ class Battle
     texts = []
     damage = rand(10..25)
     defender.take_damage(damage)
-    texts << "#{attacker.name}の攻撃, #{attacker.special_move}！ #{defender.name}に#{damage}のダメージ！"
+    texts.push(*@battle_message_generator.attack(attacker, defender, damage))
 
     if battle_over?
-      texts << "#{defender.name}は倒れた！"
+      texts.push(*@battle_message_generator.battle_over(attacker, defender))
       @winner = attacker
       @status = BattleStatus::DECIDE_WINNER
     end
