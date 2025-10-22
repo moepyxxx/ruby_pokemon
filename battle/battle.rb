@@ -1,32 +1,49 @@
 require_relative '../pokemon/battle_pokemon'
 require_relative 'battle_status'
-require_relative 'battle_message_generator'
+require_relative 'introduction_result'
+require_relative 'turn_result'
+require_relative 'attack_result'
+require_relative 'status_result'
+require_relative '../ui'
 
 class Battle
   @status = BattleStatus::START
   @winner = nil
+  @attacker = nil
+  @receiver = nil
 
   def initialize(player_pokemon, enemy_pokemon)
     @player_pokemon = player_pokemon
     @enemy_pokemon = enemy_pokemon
-    @battle_message_generator = BattleMessageGenerator.new(@player_pokemon, @enemy_pokemon)
+    @attacker = player_pokemon
+    @receiver = enemy_pokemon
   end
+
+  def execute
+    introductions = introduction
+    Ui.display_messages(introductions)
+
+    while battle_in_progress?
+      Ui.display_messages(StatusResult.new(@enemy_pokemon, @player_pokemon).message)
+
+      select_move
+
+      attack(@attacker, @receiver)
+      change_attacker
+      check_winner
+    end
+  end
+
+  private
 
   def introduction
     go_to_next_status
-    return @battle_message_generator.introduction
+    result = IntroductionResult.new(@enemy_pokemon, @player_pokemon).message
+    Ui.display_messages(result)
   end
 
   def battle_in_progress?
     return @status != BattleStatus::DECIDE_WINNER
-  end
-
-  def player_pokemon
-    @player_pokemon
-  end
-
-  def enemy_pokemon
-    @enemy_pokemon
   end
 
   def select_move
@@ -51,37 +68,34 @@ class Battle
     end
   end
 
-  def player_attack
-    result = attack(@player_pokemon, @enemy_pokemon)
-    go_to_next_status unless battle_over?
-    return result
+  def change_attacker
+    if @attacker == @player_pokemon
+      @attacker = @enemy_pokemon
+      @receiver = @player_pokemon
+    else
+      @attacker = @player_pokemon
+      @receiver = @enemy_pokemon
+    end
   end
 
-  def enemy_attack
-    result = attack(@enemy_pokemon, @player_pokemon)
-    go_to_next_status unless battle_over?
-    return result
-  end
-
-  private
-
-  def attack(attacker, defender)
-    texts = []
+  def attack(attacker, receiver)
     damage = rand(10..25)
-    defender.take_damage(damage)
-    texts.push(*@battle_message_generator.attack(attacker, defender, damage))
+    receiver.take_damage(damage)
+    result = AttackResult.new(attacker, receiver, damage).message
+    Ui.display_messages(result)    
+  end
 
+  def check_winner
     if battle_over?
-      texts.push(*@battle_message_generator.battle_over(attacker, defender))
-      @winner = attacker
+      winner = @player_pokemon.hp > 0 ? @player_pokemon : @enemy_pokemon
+      loser = @player_pokemon.hp <= 0 ? @player_pokemon : @enemy_pokemon
+      Ui.display_messages(TurnResult.new(winner, loser).message)
+      @winner = winner
       @status = BattleStatus::DECIDE_WINNER
     end
-
-    return texts
   end
 
   def battle_over?
     return @player_pokemon.hp <= 0 || @enemy_pokemon.hp <= 0
   end
-
 end
