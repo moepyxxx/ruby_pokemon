@@ -10,7 +10,7 @@ class Battle
     @player_pokemon = player_pokemon
     @enemy_pokemon = enemy_pokemon
     @player_turn = true
-    @current_player_pokemon_move_index = nil
+    @current_player_pokemon_move = nil
     @current_enemy_pokemon_move = nil
   end
 
@@ -40,7 +40,7 @@ class Battle
   end
 
   def attacker_move
-    return @player_turn ? @player_pokemon.moves[@current_player_pokemon_move_index] : @current_enemy_pokemon_move
+    return @player_turn ? @current_player_pokemon_move : @current_enemy_pokemon_move
   end
 
   def introduction
@@ -58,7 +58,7 @@ class Battle
   end
 
   def select_move
-    @current_player_pokemon_move_index = Ui.select_move(@player_pokemon.moves)
+    @current_player_pokemon_move = Ui.select_move(@player_pokemon.moves)
   end
 
   def manual_select_move_by_enemy
