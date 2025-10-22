@@ -4,9 +4,9 @@ require_relative 'turn_result_interface'
 class StatusResult
   include TurnResultInterface
 
-  def initialize(enemy_pokemon, player_pokemon)
-    @enemy_pokemon = enemy_pokemon
-    @player_pokemon = player_pokemon
+  def initialize(player:, enemy:)
+    @player_pokemon = player
+    @enemy_pokemon = enemy
   end
 
   def message
