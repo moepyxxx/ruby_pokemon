@@ -4,6 +4,7 @@ require_relative 'turn_result'
 require_relative 'attack_result'
 require_relative 'status_result'
 require_relative '../ui'
+require_relative 'type_effectiveness'
 
 class Battle
   def initialize(player_pokemon, enemy_pokemon)
@@ -70,9 +71,10 @@ class Battle
   end
 
   def attack(attacker, receiver, attacker_move)
-    damage = attacker.level * attacker_move.power
+    effectiveness = TypeEffectiveness.effectiveness(attacker_move.type, receiver.type)
+    damage = attacker.level * attacker_move.power * effectiveness
     receiver.take_damage!(damage)
-    Ui.display_messages(AttackResult.new(attacker, receiver, attacker_move, damage).message)
+    Ui.display_messages(AttackResult.new(attacker, receiver, attacker_move, damage, effectiveness).message)
   end
 
   def check_winner
