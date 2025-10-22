@@ -17,7 +17,7 @@ class BattlePokemon
     return "#{@name} (Type: #{@type}, Level: #{@level}) - HP: #{@hp}"
   end
 
-  def take_damage(damage)
+  def take_damage!(damage)
     @hp -= damage
   end
 end

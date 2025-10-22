@@ -71,7 +71,7 @@ class Battle
 
   def attack(attacker, receiver, attacker_move)
     damage = attacker.level * attacker_move[:power]
-    receiver.take_damage(damage)
+    receiver.take_damage!(damage)
     Ui.display_messages(AttackResult.new(attacker, receiver, attacker_move, damage).message)
   end
 
