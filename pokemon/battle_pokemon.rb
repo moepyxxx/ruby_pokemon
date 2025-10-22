@@ -1,16 +1,12 @@
 class BattlePokemon
-  attr_reader :name, :hp
+  attr_reader :name, :hp, :moves, :level
 
-  def initialize(name, type, moves = [], level, remainHp)
+  def initialize(name, type, moves, level, remainHp: nil)
     @name = name
     @type = type
     @moves = moves
     @level = level
-    @hp = remainHp
-  end
-
-  def special_move
-    return @moves.first
+    @hp = remainHp || level * 15
   end
 
   def is_alive?

@@ -10,6 +10,8 @@ class Battle
     @player_pokemon = player_pokemon
     @enemy_pokemon = enemy_pokemon
     @player_turn = true
+    @current_player_pokemon_move_index = nil
+    @current_enemy_pokemon_move = nil
   end
 
   def execute
@@ -19,8 +21,9 @@ class Battle
       status
 
       select_move if @player_turn
+      manual_select_move_by_enemy if !@player_turn
 
-      attack(attacker, receiver)
+      attack(attacker, receiver, attacker_move)
       check_winner
       switch_turn
     end
@@ -34,6 +37,10 @@ class Battle
 
   def receiver
     return @player_turn ? @enemy_pokemon : @player_pokemon
+  end
+
+  def attacker_move
+    return @player_turn ? @player_pokemon.moves[@current_player_pokemon_move_index] : @current_enemy_pokemon_move
   end
 
   def introduction
@@ -51,17 +58,21 @@ class Battle
   end
 
   def select_move
-    # TODO: implement move selection
+    @current_player_pokemon_move_index = Ui.select_move(@player_pokemon.moves)
+  end
+
+  def manual_select_move_by_enemy
+    @current_enemy_pokemon_move = @enemy_pokemon.moves.sample
   end
 
   def switch_turn
     @player_turn = !@player_turn
   end
 
-  def attack(attacker, receiver)
-    damage = rand(10..25)
+  def attack(attacker, receiver, attacker_move)
+    damage = attacker.level * attacker_move[:power]
     receiver.take_damage(damage)
-    Ui.display_messages(AttackResult.new(attacker, receiver, damage).message)    
+    Ui.display_messages(AttackResult.new(attacker, receiver, attacker_move, damage).message)
   end
 
   def check_winner

@@ -11,5 +11,13 @@ class Serif
     def next(message)
       @prompt.keypress(message)
     end
+
+    def select(message, choices)
+      @prompt.select(message) do |menu|
+        choices.each do |choice|
+          menu.choice choice[:name], choice[:value]
+        end
+      end
+    end
   end
 end
