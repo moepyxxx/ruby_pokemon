@@ -21,7 +21,7 @@ class Battle
       status
 
       select_move if @player_turn
-      manual_select_move_by_enemy if !@player_turn
+      manual_select_move_by_enemy unless @player_turn
 
       attack(attacker, receiver, attacker_move)
       check_winner
@@ -32,15 +32,15 @@ class Battle
   private
 
   def attacker
-    return @player_turn ? @player_pokemon : @enemy_pokemon
+    @player_turn ? @player_pokemon : @enemy_pokemon
   end
 
   def receiver
-    return @player_turn ? @enemy_pokemon : @player_pokemon
+    @player_turn ? @enemy_pokemon : @player_pokemon
   end
 
   def attacker_move
-    return @player_turn ? @current_player_pokemon_move : @current_enemy_pokemon_move
+    @player_turn ? @current_player_pokemon_move : @current_enemy_pokemon_move
   end
 
   def introduction
@@ -54,7 +54,7 @@ class Battle
   end
 
   def battle_in_progress?
-    return @player_pokemon.hp > 0 && @enemy_pokemon.hp > 0
+    return @player_pokemon.hp.positive? && @enemy_pokemon.hp.positive?
   end
 
   def select_move
@@ -76,15 +76,11 @@ class Battle
   end
 
   def check_winner
-    if battle_over?
-      winner = @player_pokemon.hp > 0 ? @player_pokemon : @enemy_pokemon
-      loser = @player_pokemon.hp <= 0 ? @player_pokemon : @enemy_pokemon
-      Ui.display_messages(TurnResult.new(winner, loser).message)
-      @winner = winner
-    end
-  end
+    return if battle_in_progress?
 
-  def battle_over?
-    return @player_pokemon.hp <= 0 || @enemy_pokemon.hp <= 0
+    winner = @player_pokemon.hp.positive? ? @player_pokemon : @enemy_pokemon
+    loser = @player_pokemon.hp.positive? ? @enemy_pokemon : @player_pokemon
+    Ui.display_messages(TurnResult.new(winner, loser).message)
+    @winner = winner
   end
 end
