@@ -6,10 +6,11 @@ require_relative 'pokemon/grass_pokemon'
 require_relative 'pokemon/fire_pokemon'
 require_relative 'battle/battle'
 require_relative 'serif'
+require_relative 'move/move'
 
 # waninoko = Pokemon.new("ワニノコ", :grass, ["たいあたり", "みずでっぽう"])
-hinoarashi = Pokemon.new("ヒノアラシ", :fire, [{ name: "たいあたり", power: 5 }, { name: "ひのこ", power: 8 }])
-chikorita = Pokemon.new("チコリータ", :grass, [{ name: "たいあたり", power: 5 }, { name: "はっぱカッター", power: 8 }])
+hinoarashi = Pokemon.new("ヒノアラシ", :fire, [Move.new("たいあたり", :normal, 5), Move.new("ひのこ", :fire, 8)])
+chikorita = Pokemon.new("チコリータ", :grass, [Move.new("たいあたり", :normal, 5), Move.new("はっぱカッター", :grass, 8)])
 
 # プレイヤーのポケモンをセット(ゲットしたイメージ)
 player_pokemon = PlayerPokemon.new(hinoarashi, 5, hinoarashi.moves[0..3])

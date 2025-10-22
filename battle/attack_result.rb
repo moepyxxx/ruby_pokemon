@@ -13,7 +13,7 @@ class AttackResult
 
   def message
     return [
-      "#{@attacker.name}の#{@move[:name]}！",
+      "#{@attacker.name}の#{@move.name}！",
       "#{@defender.name}に#{@damage}のダメージ！",
     ]
   end

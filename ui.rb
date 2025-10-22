@@ -8,7 +8,7 @@ class Ui
     end
 
     def select_move(moves)
-      choices = moves.map.with_index { |move, index| {name: move[:name], value: index} }
+      choices = moves.map.with_index { |move, index| {name: move.name, value: index} }
       idx = Serif.select("どのわざを つかう？", choices)
       return moves[idx]
     end
