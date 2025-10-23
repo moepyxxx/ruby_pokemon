@@ -1,6 +1,6 @@
 require 'tty-prompt'
 
-class Serif 
+class Cli 
   @prompt = TTY::Prompt.new
   
   class << self

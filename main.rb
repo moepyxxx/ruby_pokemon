@@ -2,7 +2,6 @@
 require 'bundler/setup'
 require_relative 'pokemon/player_pokemon'
 require_relative 'battle/battle'
-require_relative 'serif'
 require_relative 'move/move'
 require_relative 'move/battle_move'
 require_relative 'pokemon/pokemon'

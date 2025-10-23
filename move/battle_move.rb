@@ -10,8 +10,6 @@ class BattleMove
   def initialize(move, max_pp = nil)
     @move = move
     @current_pp = max_pp || move.max_pp || 10
-    puts "Initialized BattleMove: #{move.max_pp}"
-    puts "Initialized BattleMove: #{@current_pp}"
   end
 
   def useable?
