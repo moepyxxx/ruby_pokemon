@@ -11,7 +11,7 @@ class MoveTurn
 
   def execute!
     effectiveness = TypeEffectiveness.effectiveness(@move.type, @receiver.type)
-    damage = DamageCalculator.calculate(
+    damage, is_critical = DamageCalculator.calculate(
       attacker_level: @attacker.level,
       move_power: @move.power,
       effectiveness: effectiveness
@@ -20,7 +20,8 @@ class MoveTurn
 
     {
       damage:,
-      effectiveness:
+      effectiveness:,
+      is_critical:
     }
   end
 end
