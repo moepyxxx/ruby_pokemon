@@ -17,6 +17,7 @@ class MoveTurn
       effectiveness: effectiveness
     )
     @receiver.take_damage!(damage)
+    @move.use!
 
     {
       damage:,

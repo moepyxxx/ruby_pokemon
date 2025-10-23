@@ -59,7 +59,17 @@ class Battle
   end
 
   def select_move
-    @current_player_pokemon_move = Ui.select_move(@player_pokemon.moves)
+    puts @player_pokemon.moves.inspect
+    loop do
+      selected_move = Ui.select_move(@player_pokemon.moves)  # 戻り値を受け取る
+
+      if selected_move.useable?
+        @current_player_pokemon_move = selected_move
+        break
+      else
+        Ui.display_messages(["PPが なくなっている！ ほかの わざを えらんで ください。"])
+      end
+    end
   end
 
   def manual_select_move_by_enemy
