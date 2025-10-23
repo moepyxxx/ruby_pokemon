@@ -1,10 +1,8 @@
 require_relative '../pokemon/battle_pokemon'
 require_relative 'introduction_result'
-require_relative 'turn_result'
-require_relative 'attack_result'
+require_relative 'battle_result'
 require_relative 'status_result'
-require_relative '../ui'
-require_relative 'type_effectiveness'
+require_relative 'move_turn'
 
 class Battle
   def initialize(player_pokemon, enemy_pokemon)
@@ -24,7 +22,8 @@ class Battle
       select_move if @player_turn
       manual_select_move_by_enemy unless @player_turn
 
-      attack(attacker, receiver, attacker_move)
+      move
+
       check_winner
       switch_turn
     end
@@ -70,11 +69,9 @@ class Battle
     @player_turn = !@player_turn
   end
 
-  def attack(attacker, receiver, attacker_move)
-    effectiveness = TypeEffectiveness.effectiveness(attacker_move.type, receiver.type)
-    damage = attacker.level * attacker_move.power * effectiveness
-    receiver.take_damage!(damage)
-    Ui.display_messages(AttackResult.new(attacker, receiver, attacker_move, damage, effectiveness).message)
+  def move
+    result = MoveTurn.new(attacker, receiver, attacker_move).execute!
+    Ui.display_messages(MoveResult.new(attacker, receiver, attacker_move, result[:damage], result[:effectiveness]).message)
   end
 
   def check_winner
@@ -82,7 +79,7 @@ class Battle
 
     winner = @player_pokemon.hp.positive? ? @player_pokemon : @enemy_pokemon
     loser = @player_pokemon.hp.positive? ? @enemy_pokemon : @player_pokemon
-    Ui.display_messages(TurnResult.new(winner, loser).message)
+    Ui.display_messages(BattleResult.new(winner, loser).message)
     @winner = winner
   end
 end

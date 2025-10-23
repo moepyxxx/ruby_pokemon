@@ -1,4 +1,4 @@
-module TurnResultInterface
+module ResultInterface
   def message
     raise NotImplementedError
   end

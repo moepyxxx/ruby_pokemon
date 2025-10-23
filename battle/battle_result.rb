@@ -1,8 +1,8 @@
 
-require_relative 'turn_result_interface'
+require_relative 'result_interface'
 
-class TurnResult
-  include TurnResultInterface
+class BattleResult
+  include ResultInterface
 
   def initialize(winner, loser)
     @winner = winner

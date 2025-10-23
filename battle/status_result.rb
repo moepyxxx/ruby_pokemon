@@ -1,8 +1,8 @@
 
-require_relative 'turn_result_interface'
+require_relative 'result_interface'
 
 class StatusResult
-  include TurnResultInterface
+  include ResultInterface
 
   def initialize(player:, enemy:)
     @player_pokemon = player

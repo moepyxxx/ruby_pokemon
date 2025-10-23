@@ -1,9 +1,9 @@
 
-require_relative 'turn_result_interface'
+require_relative 'result_interface'
 require_relative 'type_effectiveness'
 
-class AttackResult
-  include TurnResultInterface
+class MoveResult
+  include ResultInterface
 
   def initialize(attacker, defender, move, damage, effectiveness)
     @attacker = attacker
