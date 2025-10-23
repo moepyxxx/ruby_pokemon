@@ -1,12 +1,10 @@
 #!/usr/bin/env ruby
 require 'bundler/setup'
-require_relative 'pokemon/water_pokemon'
 require_relative 'pokemon/player_pokemon'
-require_relative 'pokemon/grass_pokemon'
-require_relative 'pokemon/fire_pokemon'
 require_relative 'battle/battle'
 require_relative 'serif'
 require_relative 'move/move'
+require_relative 'pokemon/pokemon'
 
 # waninoko = Pokemon.new("ワニノコ", :grass, ["たいあたり", "みずでっぽう"])
 hinoarashi = Pokemon.new("ヒノアラシ", :fire, [Move.new("たいあたり", :normal, 5), Move.new("ひのこ", :fire, 8)])

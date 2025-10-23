@@ -1,6 +1,5 @@
 require_relative '../ui'
 require_relative 'type_effectiveness'
-require_relative 'move_result'
 require_relative 'damage_calculator'
 
 class MoveTurn

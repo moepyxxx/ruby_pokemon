@@ -1,6 +1,6 @@
 
 require_relative 'result_interface'
-require_relative 'type_effectiveness'
+require_relative '../type_effectiveness'
 
 class MoveResult
   include ResultInterface

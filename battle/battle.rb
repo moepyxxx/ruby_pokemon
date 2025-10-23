@@ -1,8 +1,9 @@
 require_relative '../pokemon/battle_pokemon'
-require_relative 'introduction_result'
-require_relative 'battle_result'
-require_relative 'status_result'
+require_relative './result/introduction_result'
+require_relative './result/battle_result'
+require_relative './result/status_result'
 require_relative 'move_turn'
+require_relative './result/move_result'
 
 class Battle
   def initialize(player_pokemon, enemy_pokemon)
