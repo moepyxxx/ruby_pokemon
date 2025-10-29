@@ -13,7 +13,7 @@ class ConditionStartResult
   def message
     text = case @condition.name
     when :burned
-      "#{@pokemon.name}は#{ConditionNameMap[@condition.name]}を追った"
+      "#{@pokemon.name}は#{ConditionNameMap[@condition.name]}をおった"
     when :paralysis
       "#{@pokemon.name}はからだがしびれて動けなくなってしまった"
     when :poison

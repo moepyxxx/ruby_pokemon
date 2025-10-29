@@ -34,7 +34,6 @@ class MoveResult
 
   def message
     if !@is_hit && @can_not_move_for_condition
-      puts "hoge"
       return CanNotMoveForConditionResult.new(@attacker, @attacker.condition).message
     end
 
@@ -48,6 +47,6 @@ class MoveResult
     message << "効果はいまひとつだ" if @effectiveness == TypeEffectiveness::NOT_VERY
     message+= ConditionStartResult.new(@receiver, @condition).message if @condition && @is_start_condition_effective
     message+= TakeDamageForConditionResult.new(@receiver, @condition).message if @condition
-    return message
+    message
   end
 end

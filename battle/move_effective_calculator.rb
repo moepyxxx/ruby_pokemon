@@ -17,8 +17,6 @@ class MoveEffectiveCalculator
         }
       end
 
-      puts "通らないよね？"
-
       effectiveness = TypeEffectiveness.effectiveness(move.type, receiver.type)
       damage, is_critical = DamageCalculator.calculate(
         attacker_level: attacker.level,

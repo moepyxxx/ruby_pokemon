@@ -11,12 +11,10 @@ class MoveTurn
 
   def execute!
     result = MoveEffectiveCalculator.calculate(@move, @attacker, @receiver)
-    puts result.inspect
     @receiver.take_damage!(result[:damage])
 
     if result[:is_start_condition_effective] && result[:condition]
       @receiver.apply_condition!(result[:condition])
-      @receiver.take_damage!(result[:condition].calculate_damage(@receiver.hp))
     end
 
     if result[:condition]
