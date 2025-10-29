@@ -1,6 +1,6 @@
 require_relative '../ui'
-require_relative 'type_effectiveness'
 require_relative 'damage_calculator'
+require_relative 'move_effective_calculator'
 
 class MoveTurn
   def initialize(attacker, receiver, move)
@@ -10,19 +10,25 @@ class MoveTurn
   end
 
   def execute!
-    effectiveness = TypeEffectiveness.effectiveness(@move.type, @receiver.type)
-    damage, is_critical = DamageCalculator.calculate(
-      attacker_level: @attacker.level,
-      move_power: @move.power,
-      effectiveness: effectiveness
-    )
-    @receiver.take_damage!(damage)
+    result = MoveEffectiveCalculator.calculate(@move, @attacker, @receiver)
+    @receiver.take_damage!(result[:damage])
+
+    if result[:started_condition]
+      @receiver.apply_condition!(result[:started_condition])
+    end
+
+    if result[:continued_condition]
+      @receiver.take_damage!(result[:continued_condition].calculate_damage(@receiver.hp))
+    end
+
     @move.use!
 
     {
-      damage:,
-      effectiveness:,
-      is_critical:
+      damage: result[:damage],
+      effectiveness: result[:effectiveness],
+      is_critical: result[:is_critical],
+      started_condition: result[:started_condition],
+      continued_condition: result[:continued_condition]
     }
   end
 end

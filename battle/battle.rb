@@ -82,7 +82,18 @@ class Battle
 
   def move
     result = MoveTurn.new(attacker, receiver, attacker_move).execute!
-    Ui.display_messages(MoveResult.new(attacker, receiver, attacker_move, result[:damage], result[:effectiveness], result[:is_critical]).message)
+    Ui.display_messages(
+      MoveResult.new(
+        attacker:,
+        receiver:,
+        move: attacker_move,
+        damage: result[:damage],
+        effectiveness: result[:effectiveness],
+        is_critical: result[:is_critical],
+        started_condition: result[:started_condition],
+        continued_condition: result[:continued_condition]
+      ).message
+    )
   end
 
   def check_winner

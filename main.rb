@@ -7,9 +7,28 @@ require_relative 'move/battle_move'
 require_relative 'pokemon/pokemon'
 
 # waninoko = Pokemon.new("ワニノコ", :grass, ["たいあたり", "みずでっぽう"])
-taiatari = Move.new("たいあたり", :normal, 5, 5)
-hinoko = Move.new("ひのこ", :fire, 8, 3)
-happa_cutter = Move.new("はっぱカッター", :grass, 8, 3)
+taiatari = Move.new(
+  name: "たいあたり",
+  type: :normal,
+  max_pp: 5,
+  power: 5,
+)
+hinoko = Move.new(
+  name: "ひのこ",
+  type: :fire,
+  max_pp: 3,
+  power: 8,
+  condition_effective: :burned,
+  condition_effective_rate: 0.8
+)
+happa_cutter = Move.new(
+  name: "はっぱカッター",
+  type: :grass,
+  max_pp: 3,
+  power: 8,
+  condition_effective: :paralysis,
+  condition_effective_rate: 0.8
+)
 hinoarashi = Pokemon.new("ヒノアラシ", :fire, [taiatari, hinoko])
 chikorita = Pokemon.new("チコリータ", :grass, [taiatari, happa_cutter])
 

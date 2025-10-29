@@ -3,9 +3,7 @@ require 'forwardable'
 
 class BattleMove
   extend Forwardable
-  def_delegators :@move, :name, :type, :power, :max_pp
-
-  attr_reader :current_pp
+  def_delegators :@move, :name, :type, :power, :max_pp, :condition_effective, :condition_effective_rate
 
   def initialize(move, max_pp = nil)
     @move = move
