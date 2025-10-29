@@ -8,12 +8,12 @@ class Condition
       :burned
     end
 
-    def take_damage!(hp)
+    def calculate_damage(hp)
       hp - (hp / 10)
     end
 
-    def can_move?
-      true
+    def move_rate
+      1
     end
   end
 end

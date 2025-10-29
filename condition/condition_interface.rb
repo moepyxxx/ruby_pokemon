@@ -1,13 +1,19 @@
+ConditionNameMap = {
+  burned: "やけど",
+  paralysis: "まひ",
+  poison: "どく"
+}.freeze
+
 module ConditionInterface
   def name
     raise NotImplementedError
   end
 
-  def take_damage!(hp)
+  def calculate_damage(hp)
     raise NotImplementedError
   end
 
-  def can_move?
+  def move_rate
     raise NotImplementedError
   end
 end

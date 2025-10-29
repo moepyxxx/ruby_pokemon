@@ -4,14 +4,13 @@ require_relative 'condition_poison'
 
 class StatusCondition
   def self.create(type)
-    puts "type: #{type}"
     case type
     when :burned
       Condition::Burned.new
-    when :paralyzed
-      Condition::Paralyzed.new
-    when :poisoned
-      Condition::Poisoned.new
+    when :paralysis
+      Condition::Paralysis.new
+    when :poison
+      Condition::Poison.new
     else
       raise ArgumentError, "Unknown status condition type: #{type}"
     end

@@ -11,7 +11,6 @@ class BattleMove
   end
 
   def useable?
-    puts  @current_pp > 0
     @current_pp > 0
   end
 
@@ -24,11 +23,11 @@ class BattleMove
 
   def restore_pp!(amount)
     @current_pp += amount
-    @current_pp = [@current_pp, @max_pp].min
+    @current_pp = [@current_pp, max_pp].min
   end
 
   def recover_full_pp!
-    @current_pp = @max_pp
+    @current_pp = max_pp
   end
 
 end

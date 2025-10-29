@@ -21,4 +21,9 @@ class BattlePokemon
   def apply_condition!(condition)
     @condition = condition
   end
+
+  def can_move?
+    return true if @condition.nil?
+    rand < @condition.move_rate
+  end
 end

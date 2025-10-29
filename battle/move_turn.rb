@@ -11,14 +11,16 @@ class MoveTurn
 
   def execute!
     result = MoveEffectiveCalculator.calculate(@move, @attacker, @receiver)
+    puts result.inspect
     @receiver.take_damage!(result[:damage])
 
-    if result[:started_condition]
-      @receiver.apply_condition!(result[:started_condition])
+    if result[:is_start_condition_effective] && result[:condition]
+      @receiver.apply_condition!(result[:condition])
+      @receiver.take_damage!(result[:condition].calculate_damage(@receiver.hp))
     end
 
-    if result[:continued_condition]
-      @receiver.take_damage!(result[:continued_condition].calculate_damage(@receiver.hp))
+    if result[:condition]
+      @receiver.take_damage!(result[:condition].calculate_damage(@receiver.hp))
     end
 
     @move.use!
@@ -27,8 +29,10 @@ class MoveTurn
       damage: result[:damage],
       effectiveness: result[:effectiveness],
       is_critical: result[:is_critical],
-      started_condition: result[:started_condition],
-      continued_condition: result[:continued_condition]
+      condition: result[:condition],
+      is_start_condition_effective: result[:is_start_condition_effective],
+      is_hit: result[:is_hit],
+      can_not_move_for_condition: result[:can_not_move_for_condition]
     }
   end
 end

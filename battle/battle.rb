@@ -59,7 +59,6 @@ class Battle
   end
 
   def select_move
-    puts @player_pokemon.moves.inspect
     loop do
       selected_move = Ui.select_move(@player_pokemon.moves)  # 戻り値を受け取る
 
@@ -90,8 +89,10 @@ class Battle
         damage: result[:damage],
         effectiveness: result[:effectiveness],
         is_critical: result[:is_critical],
-        started_condition: result[:started_condition],
-        continued_condition: result[:continued_condition]
+        condition: result[:condition],
+        is_start_condition_effective: result[:is_start_condition_effective],
+        is_hit: result[:is_hit],
+        can_not_move_for_condition: result[:can_not_move_for_condition]
       ).message
     )
   end

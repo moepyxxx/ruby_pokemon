@@ -12,8 +12,8 @@ class Condition
       hp - (hp / 10)
     end
 
-    def can_move?
-      true
+    def move_rate
+      1
     end
   end
 end

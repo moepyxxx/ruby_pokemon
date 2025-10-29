@@ -8,12 +8,12 @@ class Condition
       :paralysis
     end
 
-    def take_damage!(hp)
-      hp
+    def calculate_damage(hp)
+      0
     end
 
-    def can_move?
-      rand < 0.75
+    def move_rate
+      0.5
     end
   end
 end
